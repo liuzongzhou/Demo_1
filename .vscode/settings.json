@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "sdl.h": "c",
+        "lvgl.h": "c",
+        "lv_freetype.h": "c",
+        "ft2build.h": "c",
+        "lv_draw.h": "c",
+        "lv_txt.h": "c",
+        "lv_bidi.h": "c",
+        "lv_draw_text.h": "c",
+        "lv_draw_label.h": "c"
+    }
+}

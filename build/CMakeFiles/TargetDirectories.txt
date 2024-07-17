@@ -1,0 +1,3 @@
+C:/NXP/GUI-Guider-Projects/Demo_1/build/CMakeFiles/LVGL_GuiGuider.dir
+C:/NXP/GUI-Guider-Projects/Demo_1/build/CMakeFiles/edit_cache.dir
+C:/NXP/GUI-Guider-Projects/Demo_1/build/CMakeFiles/rebuild_cache.dir

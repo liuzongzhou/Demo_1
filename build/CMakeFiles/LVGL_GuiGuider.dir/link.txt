@@ -1,0 +1,3 @@
+"D:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\LVGL_GuiGuider.dir/objects.a
+D:\mingw64\bin\ar.exe qc CMakeFiles\LVGL_GuiGuider.dir/objects.a @CMakeFiles\LVGL_GuiGuider.dir\objects1.rsp
+D:\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\LVGL_GuiGuider.dir/objects.a -Wl,--no-whole-archive -o LVGL_GuiGuider.exe -Wl,--out-implib,libLVGL_GuiGuider.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\LVGL_GuiGuider.dir\linkLibs.rsp
