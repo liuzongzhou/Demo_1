@@ -8,6 +8,16 @@
         "lv_txt.h": "c",
         "lv_bidi.h": "c",
         "lv_draw_text.h": "c",
-        "lv_draw_label.h": "c"
+        "lv_draw_label.h": "c",
+        "stdio.h": "c",
+        "keyboard.h": "c",
+        "lv_zh_keyboard.h": "c",
+        "widgets_init.h": "c",
+        "custom.h": "c",
+        "events_init.h": "c",
+        "lv_draw_text_lexical_compiler.h": "c",
+        "lv_math.h": "c",
+        "unistd.h": "c",
+        "stddef.h": "c"
     }
 }

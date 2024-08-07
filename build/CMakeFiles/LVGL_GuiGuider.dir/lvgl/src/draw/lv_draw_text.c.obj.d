@@ -69,6 +69,7 @@ CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text.c.obj: \
  C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/misc/lv_math.h \
  C:\NXP\GUI-Guider-Projects\Demo_1\lvgl\src\draw\lv_draw_transform.h \
  C:\NXP\GUI-Guider-Projects\Demo_1\lvgl\src\draw\lv_draw_layer.h \
+ C:\NXP\GUI-Guider-Projects\Demo_1\lvgl\src\draw\lv_draw_text_lexical_compiler.h \
  C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/hal/lv_hal_disp.h \
  C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/hal/lv_hal.h \
  C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/hal/lv_hal_disp.h \

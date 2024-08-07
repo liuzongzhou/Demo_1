@@ -356,6 +356,7 @@ void lv_zh_keyboard_def_event_cb(lv_event_t * e)
     if(btn_id == LV_BTNMATRIX_BTN_NONE)
         return;
 
+    /*获取矩阵键盘的字符*/
     const char * txt = lv_btnmatrix_get_btn_text(obj, lv_btnmatrix_get_selected_btn(obj));
     if(txt == NULL)
         return;
@@ -595,6 +596,16 @@ static void show_chinese(char * chineseText)
         char resultText[4 * 120 + 12] = {0};
         for(i = 0; i < strlen(chineseText); i++) {
             if(chineseText[i] == 0) break;
+            /*adjustable_box中每个文字加入序号*/
+            if(i % 3 == 0) {
+                if (i >= 27)
+                {
+                    resultText[j++] = '0' + (i/3+1) / 10 ;
+                }   
+                resultText[j++] = '0' + (i/3+1)%10;
+            }
+           // resultText[j++] = i+1;
+            //resultText[j++] = ' ';
             resultText[j++] = chineseText[i];
             if((i + 1) % 3 == 0) {
                 resultText[j++] = ' ';

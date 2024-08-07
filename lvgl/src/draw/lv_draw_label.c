@@ -302,7 +302,7 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_label(lv_draw_ctx_t * draw_ctx, const lv_draw
             }
 
             dsc_mod.color = color;
-            //if(letter == (uint32_t)111) dsc_mod.color = lv_color_hex(0xFF5733);
+           //if(letter == (uint32_t)111) dsc_mod.color = lv_color_hex(0xFF5733);
             lv_draw_letter(draw_ctx, &dsc_mod, &pos, letter);
 
             if(letter_w > 0) {

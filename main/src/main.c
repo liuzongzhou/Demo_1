@@ -27,6 +27,10 @@
 #include "generated/events_init.h"
 
 
+//#include <stdio.h>
+//#include <Python.h>
+
+
 lv_ui guider_ui;
 
 static void hal_init(void);
@@ -42,6 +46,39 @@ int main(int argc, char **argv) {
 
     /*Initialize the HAL (display, input devices, tick) for LVGL*/
     hal_init();
+
+//     Py_Initialize(); // 初始化Python解释器
+
+//     if (Py_IsInitialized()) {
+//         // 创建一个Python文件对象
+//         PyObject *file = PyFile_FromFile(argv[1], "r", NULL, NULL);
+//         if (file == NULL) {
+//             fprintf(stderr, "Failed to open file\n");
+//             goto error;
+//         }
+
+//         // 执行Python文件
+//         PyObject *result = PyRun_File(file, argv[1], Py_file_input, NULL, NULL);
+//         if (result == NULL) {
+//             fprintf(stderr, "Error executing file\n");
+//             goto error;
+//         }
+//         Py_DECREF(result);
+
+//         Py_DECREF(file); // 释放文件对象
+//     } else {
+//         fprintf(stderr, "Python initialization failed\n");
+//         goto error;
+//     }
+
+//     Py_Finalize(); // 清理Python解释器
+//     return 0;
+
+// error:
+//     Py_Finalize();
+//     return 1;
+
+
 
     setup_ui(&guider_ui);
     events_init(&guider_ui);
@@ -78,7 +115,10 @@ static void hal_init(void) {
     static lv_color_t buf1_1[MONITOR_HOR_RES * 100];
     static lv_color_t buf1_2[MONITOR_HOR_RES * 100];
     lv_disp_draw_buf_init(&disp_buf1, buf1_1, buf1_2, MONITOR_HOR_RES * 100);
-
+    
+    
+    
+    
     /*Create a display*/
     static lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv); /*Basic initialization*/

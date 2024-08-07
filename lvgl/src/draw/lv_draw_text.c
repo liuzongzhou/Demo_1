@@ -8,6 +8,7 @@
  *********************/
 #include "lv_draw.h"
 #include "lv_draw_text.h"
+#include "lv_draw_text_lexical_compiler.h"
 #include "../misc/lv_math.h"
 #include "../hal/lv_hal_disp.h"
 #include "../core/lv_refr.h"
@@ -213,7 +214,7 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
     draw_dsc_sel.bg_color = dsc->sel_bg_color;
 
     int32_t pos_x_start = pos.x;
-    /*Write out all lines*/
+    /*Write out all lines   逐行*/
     while(txt[line_start] != '\0') {
         pos.x += x_ofs;
 
@@ -226,7 +227,7 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
 #else
         const char * bidi_txt = txt + line_start;
 #endif
-
+        /* 逐字符draw*/
         while(i < line_end - line_start) {
             uint32_t logical_char_pos = 0;
             if(sel_start != 0xFFFF && sel_end != 0xFFFF) {
@@ -241,8 +242,12 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
 
             uint32_t letter;
             uint32_t letter_next;
-            _lv_txt_encoded_letter_next_2(bidi_txt, &letter, &letter_next, &i);
-            printf("The value of the letter is: %u, %u\n", letter,i);
+           
+           // printf("The value of the letter is: %u\n",i);
+
+            _lv_txt_encoded_letter_next_2(bidi_txt, &letter, &letter_next, &i);//实现i+1
+           
+           // printf("The value of the letter is: %u, %u\n", letter,i);
             /*Handle the re-color command*/
             if((dsc->flag & LV_TEXT_FLAG_RECOLOR) != 0) {
                 if(letter == (uint32_t)LV_TXT_COLOR_CMD[0]) {
@@ -302,7 +307,14 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
             }
 
             dsc_mod.color = color;
-            if(letter == (uint32_t)72) dsc_mod.color = lv_color_hex(0xFF5733);
+            /*实现词法编译器*/
+            if (isOperator(letter)) dsc_mod.color = lv_color_hex(0xFF5733);
+        
+
+
+
+
+            //if(letter == (uint32_t)72) dsc_mod.color = lv_color_hex(0xFF5733);
             lv_draw_letter(draw_ctx, &dsc_mod, &pos, letter);
 
             if(letter_w > 0) {
