@@ -968,6 +968,30 @@ lvgl/src/draw/lv_draw_text.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\LVGL_GuiGuider.dir\build.make CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text.c.s
 .PHONY : lvgl/src/draw/lv_draw_text.c.s
 
+lvgl/src/draw/lv_draw_text_lexical_compiler.obj: lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj
+.PHONY : lvgl/src/draw/lv_draw_text_lexical_compiler.obj
+
+# target to build an object file
+lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LVGL_GuiGuider.dir\build.make CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj
+.PHONY : lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj
+
+lvgl/src/draw/lv_draw_text_lexical_compiler.i: lvgl/src/draw/lv_draw_text_lexical_compiler.c.i
+.PHONY : lvgl/src/draw/lv_draw_text_lexical_compiler.i
+
+# target to preprocess a source file
+lvgl/src/draw/lv_draw_text_lexical_compiler.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LVGL_GuiGuider.dir\build.make CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.i
+.PHONY : lvgl/src/draw/lv_draw_text_lexical_compiler.c.i
+
+lvgl/src/draw/lv_draw_text_lexical_compiler.s: lvgl/src/draw/lv_draw_text_lexical_compiler.c.s
+.PHONY : lvgl/src/draw/lv_draw_text_lexical_compiler.s
+
+# target to generate assembly for a file
+lvgl/src/draw/lv_draw_text_lexical_compiler.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LVGL_GuiGuider.dir\build.make CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.s
+.PHONY : lvgl/src/draw/lv_draw_text_lexical_compiler.c.s
+
 lvgl/src/draw/lv_draw_transform.obj: lvgl/src/draw/lv_draw_transform.c.obj
 .PHONY : lvgl/src/draw/lv_draw_transform.obj
 
@@ -5354,6 +5378,9 @@ help:
 	@echo ... lvgl/src/draw/lv_draw_text.obj
 	@echo ... lvgl/src/draw/lv_draw_text.i
 	@echo ... lvgl/src/draw/lv_draw_text.s
+	@echo ... lvgl/src/draw/lv_draw_text_lexical_compiler.obj
+	@echo ... lvgl/src/draw/lv_draw_text_lexical_compiler.i
+	@echo ... lvgl/src/draw/lv_draw_text_lexical_compiler.s
 	@echo ... lvgl/src/draw/lv_draw_transform.obj
 	@echo ... lvgl/src/draw/lv_draw_transform.i
 	@echo ... lvgl/src/draw/lv_draw_transform.s

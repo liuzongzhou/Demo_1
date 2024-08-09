@@ -21,7 +21,7 @@ void setup_scr_screen(lv_ui *ui)
 	/*Create a font*/
 	lv_ft_info_t info;
 	info.name = "C:\\NXP\\GUI-Guider-Projects\\Demo_1\\generated\\guider_fonts\\SourceHanSansCN.ttf";
-    info.weight = 30;
+    info.weight = 10;
     info.style = FT_FONT_STYLE_NORMAL;
     info.mem = NULL;
     if(!lv_ft_font_init(&info)) {
@@ -44,7 +44,7 @@ void setup_scr_screen(lv_ui *ui)
 
 	//Write codes screen_ta_1
 	ui->screen_ta_1 = lv_textarea_create(ui->screen);
-	lv_textarea_set_text(ui->screen_ta_1, "Hello World");
+	lv_textarea_set_text(ui->screen_ta_1, "");
 	lv_textarea_set_placeholder_text(ui->screen_ta_1, "");
 	lv_textarea_set_password_bullet(ui->screen_ta_1, "*");
 	lv_textarea_set_password_mode(ui->screen_ta_1, false);

@@ -17,6 +17,7 @@
 #include "SDL2/SDL.h"
 #include "lvgl/lvgl.h"
 
+
 #include "monitor.h"
 #include "mouse.h"
 #include "keyboard.h"
@@ -78,7 +79,7 @@ int main(int argc, char **argv) {
 //     Py_Finalize();
 //     return 1;
 
-
+    textarea_init();
 
     setup_ui(&guider_ui);
     events_init(&guider_ui);

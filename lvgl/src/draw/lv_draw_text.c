@@ -53,6 +53,11 @@ static uint8_t hex_char_to_num(char hex);
  *   GLOBAL FUNCTIONS
  **********************/
 
+
+
+
+
+
 void LV_ATTRIBUTE_FAST_MEM lv_draw_text_dsc_init(lv_draw_text_dsc_t * dsc)
 {
     lv_memset_00(dsc, sizeof(lv_draw_text_dsc_t));
@@ -226,7 +231,268 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
         _lv_bidi_process_paragraph(txt + line_start, bidi_txt, line_end - line_start, base_dir, NULL, 0);
 #else
         const char * bidi_txt = txt + line_start;
+        //printf("bidi_txt : %s\n", bidi_txt);
 #endif
+        /*对bidi_txt(代表一行字符内容)每个字符做符号标记*/
+        int chPtr = 0;//当前读取的字符对应的字符串位置
+        int stylePtr = 0;  //每次需要的长度
+        int setStyling[line_end - line_start + 1];
+        int size = line_end - line_start;
+        do{
+            char ch = *(bidi_txt + chPtr);
+            if (ch == ' ' || ch == '\t' || ch == '\n' || ch == '\r') {  //跳过空白
+                stylePtr = 0;
+                chPtr++;
+                stylePtr++;
+
+            } else if (isOperator(ch)) {
+                stylePtr = 0;
+                stylePtr++;
+                chPtr++;
+                set_styling(setStyling, chPtr, stylePtr, OPERATOR);
+
+            } else if (isLetter(ch)) {
+                stylePtr = 0;
+                if (isKeyLetter(ch)) {  //特殊字母
+                    chPtr++;
+                    stylePtr++;
+
+                    if (isLetter(*(bidi_txt + chPtr))) {
+                        char str[100];  // 假设关键字的最大长度
+                        str[0] = bidi_txt[chPtr - 1];
+
+                        while (chPtr < size && isLetter(bidi_txt[chPtr])) {
+                            str[strlen(str)] = bidi_txt[chPtr];
+                            chPtr++;
+                            stylePtr++;
+                        }
+                        str[strlen(str)] = '\0';  // 终止字符串
+                        
+                        if (contains(&controlKeywordsSet, str)) {
+                            set_styling(setStyling, chPtr, stylePtr, CONTROLKEYWORD);  //控制关键字
+                        } else if (contains(&operatorKeywordsSet, str)) {
+                            set_styling(setStyling, chPtr, stylePtr, OPERATOR);  //运算符关键字
+                        } else if (contains(&macroProgramKeywordsSet, str)) {
+                            set_styling(setStyling, chPtr, stylePtr, MACROPROGRAM);  //宏程序关键字
+                        } else {
+                            set_styling(setStyling, chPtr, stylePtr, ERROR);
+                        }
+
+                    } else if (isDigit(*(bidi_txt + chPtr))) {
+                        char str[100];  // 假设关键字的最大长度
+                        str[0] = bidi_txt[chPtr - 1];
+
+                        while (chPtr < size && isDigit(bidi_txt[chPtr])) {
+                            str[strlen(str)] = bidi_txt[chPtr];
+                            chPtr++;
+                            stylePtr++;
+                        }
+                        str[strlen(str)] = '\0';  // 终止字符串
+
+                        switch (ch) {
+                            case 'G':
+                                set_styling(setStyling, chPtr, stylePtr, G);
+                                break;
+
+                            case 'M':
+                                if (str == "M91" || str == "M92") {
+                                    set_styling(setStyling, chPtr, stylePtr, CONTROLKEYWORD);  //控制关键字
+                                    break;
+                                }
+                                set_styling(setStyling, chPtr, stylePtr, M);
+                                break;
+
+                            case 'S':
+                                set_styling(setStyling, chPtr, stylePtr, S);
+                                break;
+
+                            case 'T':
+                                set_styling(setStyling, chPtr, stylePtr, T);
+                                break;
+
+                            case 'F':
+                                set_styling(setStyling, chPtr, stylePtr, F);
+                                break;
+
+                            case 'N':
+                                if ((chPtr - stylePtr - 1) < 0 || bidi_txt[chPtr - stylePtr - 1] == '\n') {
+                                    set_styling(setStyling, chPtr, stylePtr, N);  //作为段号
+                                    break;
+                                }
+
+                                set_styling(setStyling, chPtr, stylePtr, NROMALLETTTER);  // normal letter
+                                break;
+
+                            default:
+                                set_styling(setStyling, chPtr, stylePtr, ERROR);
+                                break;
+                        }
+                        
+                    } else if (*(bidi_txt + chPtr) == '[' || *(bidi_txt + chPtr) == ' ') {
+                        switch (ch) {
+                            case 'G':
+                                set_styling(setStyling, chPtr, stylePtr, G);
+                                break;
+                            case 'M':
+                                set_styling(setStyling, chPtr, stylePtr, M);
+                                break;
+                            case 'S':
+                                set_styling(setStyling, chPtr, stylePtr, S);
+                                break;
+                            case 'T':
+                                set_styling(setStyling, chPtr, stylePtr, T);
+                                break;
+                            case 'F':
+                                set_styling(setStyling, chPtr, stylePtr, F);
+                                break;
+                            case 'N':
+                                set_styling(setStyling, chPtr, stylePtr, N);
+                                break;
+                            default:
+                                set_styling(setStyling, chPtr, stylePtr, ERROR);
+                                break;
+                        }
+                    } else {
+                        set_styling(setStyling, chPtr, stylePtr, ERROR);
+                    }
+                } else {
+                    if (ch == 'C') {
+                        stylePtr++;
+                        chPtr++;
+                        if (*(bidi_txt + chPtr) == 'H') {
+                            stylePtr++;
+                            chPtr++;
+                            while ((chPtr < size) && isDigit(*(bidi_txt + chPtr))) {
+                                stylePtr++;
+                                chPtr++;
+                            }
+
+                            set_styling(setStyling, chPtr, stylePtr, CHANNEL);  //通道
+                            continue;
+                        } else {
+                            chPtr--;
+                            stylePtr--;
+                        }
+                    }
+                    if (ch == 'U') {
+                        stylePtr++;
+                        chPtr++;
+                        
+                        if (strchr("ABCXYZ", *(bidi_txt + chPtr)) != NULL) {
+                            set_styling(setStyling, chPtr, stylePtr, NROMALLETTTER);  // normalLetter
+                            continue;
+                        } else {
+                            chPtr--;
+                            stylePtr--;
+                        }
+                    }
+                    chPtr++;
+                    stylePtr++;
+                    if (isLetter(*(bidi_txt + chPtr))) {
+                        char str[100] = {0};  // 假设关键字的最大长度
+                        str[0] = bidi_txt[chPtr - 1];
+                        printf("Keyword : %s\n", str);
+                        while (chPtr < size && (isLetter(bidi_txt[chPtr]) || isDigit(bidi_txt[chPtr]))){
+                            str[strlen(str)] = bidi_txt[chPtr];
+                            printf("Keyword : %s\n", str);
+                            chPtr++;
+                            stylePtr++;
+                        }
+                        str[strlen(str)] = '\0';  // 终止字符串
+                        printf("Keyword : %s\n", str);
+                        // 正则表达式
+                        const char *pattern = "(DO\\d{1,2}\\b|END\\d{1,2}\\b)";
+
+                        if (contains(&controlKeywordsSet, str) || regex_match(pattern, str)) {
+                            set_styling(setStyling, chPtr, stylePtr, CONTROLKEYWORD);  //控制关键字
+                        } else if (contains(&operatorKeywordsSet, str)) {
+                            set_styling(setStyling, chPtr, stylePtr, OPERATOR);  
+                        } else if (contains(&macroProgramKeywordsSet, str)) {
+                            set_styling(setStyling, chPtr, stylePtr, MACROPROGRAM); 
+                        } else {
+                            set_styling(setStyling, chPtr, stylePtr, ERROR);
+                        }
+                    } else {
+                        set_styling(setStyling, chPtr, stylePtr, NROMALLETTTER);
+                    }
+                }
+            }else if (ch == '#' || ch == '@') {
+                stylePtr = 0;
+                chPtr++;
+                stylePtr++;
+                set_styling(setStyling, chPtr, stylePtr, NORMAL);  // macro
+                while ((chPtr < size) && (isDigit(*(bidi_txt + chPtr)) || (isLetter(*(bidi_txt + chPtr))))) {
+                    chPtr++;
+                    stylePtr++;
+                }
+                if (stylePtr == 2 && *(bidi_txt + chPtr - 1) == '0') {
+                    set_styling(setStyling, chPtr, stylePtr, MACROVAREX);  // #0
+                } else if (stylePtr == 5) {
+                    //#3000 #3003 #3004
+                    char str[100];  // 假设关键字的最大长度
+                    str[strlen(str)] = *(bidi_txt + chPtr - 4);
+                    str[strlen(str)] = *(bidi_txt + chPtr - 3);
+                    str[strlen(str)] = *(bidi_txt + chPtr - 2);
+                    str[strlen(str)] = *(bidi_txt + chPtr - 1);
+                    str[strlen(str)] = '\0';  // 终止字符串
+                    if (strcmp(str, "3000") == 0 || strcmp(str, "3003") == 0 || strcmp(str, "3004") == 0) 
+                        set_styling(setStyling, chPtr, stylePtr, MACROVAREX);
+                    else
+                        set_styling(setStyling, chPtr, stylePtr, MACROVAR);
+                } else {
+                    set_styling(setStyling, chPtr, stylePtr, MACROVAR);
+                }
+            } else if (ch == ';') {
+                stylePtr = 0;
+                stylePtr++;  //开始记录注释长度
+                chPtr++;
+
+                while (chPtr < size && *(bidi_txt + chPtr) != '\r') {
+                    chPtr++;
+                    stylePtr++;
+                }
+                set_styling(setStyling, chPtr, stylePtr, COMMENT);  // comment
+            } else if (ch == '(') {
+                stylePtr = 0;
+                stylePtr++;  //开始记录注释长度
+                chPtr++;
+
+                while ((chPtr < size) && *(bidi_txt + chPtr) != '\r' && *(bidi_txt + chPtr) != ')') {
+                    chPtr++;
+                    stylePtr++;
+                }
+                if ((chPtr < size) && (*(bidi_txt + chPtr) == ')')) {
+                    chPtr++;
+                    stylePtr++;
+                }
+                set_styling(setStyling, chPtr, stylePtr, COMMENT);  // comment
+                continue;
+            } else if (ch == '/') {
+                stylePtr = 0;
+                chPtr++;
+                stylePtr++;
+                if (*(bidi_txt + chPtr) == '/') {
+                    while (chPtr < size && *(bidi_txt + chPtr) != '\r') {
+                        chPtr++;
+                        stylePtr++;
+                    }
+                    set_styling(setStyling, chPtr, stylePtr, COMMENT);  // comment
+                } else {
+                    set_styling(setStyling, chPtr, stylePtr, OPERATOR);  // 运算符
+                }
+            } else if (ch > 0) {
+                stylePtr = 0;
+                chPtr++;
+                stylePtr++;
+                set_styling(setStyling, chPtr, stylePtr, NORMAL);
+            } else {
+                stylePtr = 0;
+                chPtr++;
+                stylePtr++;
+                set_styling(setStyling, chPtr, stylePtr, ERROR);  // error
+            }
+        }while (chPtr < size);
+
         /* 逐字符draw*/
         while(i < line_end - line_start) {
             uint32_t logical_char_pos = 0;
@@ -247,7 +513,7 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
 
             _lv_txt_encoded_letter_next_2(bidi_txt, &letter, &letter_next, &i);//实现i+1
            
-           // printf("The value of the letter is: %u, %u\n", letter,i);
+           //printf("The value of the letter is: %u, %u\n", letter,letter_next);
             /*Handle the re-color command*/
             if((dsc->flag & LV_TEXT_FLAG_RECOLOR) != 0) {
                 if(letter == (uint32_t)LV_TXT_COLOR_CMD[0]) {
@@ -307,9 +573,60 @@ void LV_ATTRIBUTE_FAST_MEM lv_draw_text(lv_draw_ctx_t * draw_ctx, const lv_draw_
             }
 
             dsc_mod.color = color;
-            /*实现词法编译器*/
-            if (isOperator(letter)) dsc_mod.color = lv_color_hex(0xFF5733);
-        
+            
+            switch (setStyling[i]) {
+                case NORMAL:
+                    dsc_mod.color = lv_color_hex(0x000000); // 黑色
+                    break;
+                case CONTROLKEYWORD:
+                    dsc_mod.color = lv_color_hex(0xFF5733); // 橙色
+                    break;
+                case COMMENT:
+                    dsc_mod.color = lv_color_hex(0x00FF00); // 绿色
+                    break;
+                case MACROVAR:
+                    dsc_mod.color = lv_color_hex(0x0000FF); // 蓝色
+                    break;
+                case OPERATOR:
+                    dsc_mod.color = lv_color_hex(0xFF0000); // 红色
+                    break;
+                case CHANNEL:
+                    dsc_mod.color = lv_color_hex(0xFFFF00); // 黄色
+                    break;
+                case NROMALLETTTER:
+                    dsc_mod.color = lv_color_hex(0x808080); // 灰色
+                    break;
+                case MACROPROGRAM:
+                    dsc_mod.color = lv_color_hex(0x800080); // 紫色
+                    break;
+                case G:
+                    dsc_mod.color = lv_color_hex(0x00FFFF); // 青色
+                    break;
+                case M:
+                    dsc_mod.color = lv_color_hex(0x008000); // 深绿色
+                    break;
+                case S:
+                    dsc_mod.color = lv_color_hex(0x800000); // 深红色
+                    break;
+                case T:
+                    dsc_mod.color = lv_color_hex(0x000080); // 深蓝色
+                    break;
+                case N:
+                    dsc_mod.color = lv_color_hex(0x808000); // 橄榄绿
+                    break;
+                case F:
+                    dsc_mod.color = lv_color_hex(0xFFA500); // 橙黄色
+                    break;
+                case ERROR:
+                    dsc_mod.color = lv_color_hex(0x8B0000); // 深红色
+                    break;
+                case MACROVAREX:
+                    dsc_mod.color = lv_color_hex(0x000080); // 深蓝色
+                    break;
+                default:
+                    dsc_mod.color = lv_color_hex(0x000000); // 黑色
+                    break;
+            }
 
 
 

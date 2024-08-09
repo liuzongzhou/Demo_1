@@ -69,6 +69,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_rect.c.obj.d"
   "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text.c.obj"
   "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text.c.obj.d"
+  "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj"
+  "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj.d"
   "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_transform.c.obj"
   "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_transform.c.obj.d"
   "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_triangle.c.obj"

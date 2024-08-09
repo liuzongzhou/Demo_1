@@ -43,6 +43,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_mask.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_mask.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_mask.c.obj.d"
   "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_rect.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_rect.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_rect.c.obj.d"
   "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_text.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text.c.obj.d"
+  "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_text_lexical_compiler.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj.d"
   "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_transform.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_transform.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_transform.c.obj.d"
   "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_triangle.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_triangle.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_triangle.c.obj.d"
   "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_img_buf.c" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_img_buf.c.obj" "gcc" "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_img_buf.c.obj.d"

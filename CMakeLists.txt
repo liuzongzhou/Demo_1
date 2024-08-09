@@ -32,8 +32,8 @@ include_directories(${INCLUDE_DIR_LIST})
 FIND_INCLUDE_DIR(INCLUDE_DIR_LIST ${PROJECT_SOURCE_DIR}/main)
 include_directories(${INCLUDE_DIR_LIST})
 
-file(GLOB_RECURSE HEADERS lv_drivers/sdl/*.h lvgl/*.h lvgl/src/*.h custom/*.h generated/*.h generated/images/*.h generated/guider_fonts/*.h generated/guider_customer_fonts/*.h lvgl-simulator/lv_conf.h lvgl-simulator/lv_drv_conf.h lvgl.hi= ko)
-file(GLOB_RECURSE SOURCES lv_drivers/sdl/*.c lvgl/*.c lvgl/src/*.c custom/*.c generated/*.c generated/images/*.c generated/guider_fonts/*.c generated/guider_customer_fonts/*.c main/*.c)
+file(GLOB_RECURSE HEADERS lv_drivers/sdl/*.h lvgl/*.h lvgl/src/*.h custom/*.h generated/*.h generated/images/*.h generated/guider_fonts/*.h generated/guider_customer_fonts/*.h lvgl-simulator/lv_conf.h lvgl/src/draw/lv_draw_text_lexical_compiler.h lvgl-simulator/lv_drv_conf.h lvgl.hi= ko)
+file(GLOB_RECURSE SOURCES lv_drivers/sdl/*.c lvgl/*.c lvgl/src/*.c custom/*.c generated/*.c generated/images/*.c generated/guider_fonts/*.c generated/guider_customer_fonts/*.c main/*.c lvgl/src/draw/lv_draw_text_lexical_compiler.c)
 
 include_directories(.  ./lvgl sdl2/include)
 include_directories("C:\\NXP\\GUI-Guider-Projects\\Demo_1\\freetype\\include")

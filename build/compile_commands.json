@@ -211,6 +211,12 @@
 },
 {
   "directory": "C:/NXP/GUI-Guider-Projects/Demo_1/build",
+  "command": "D:\\mingw64\\bin\\gcc.exe -DLV_CONF_INCLUDE_SIMPLE @CMakeFiles/LVGL_GuiGuider.dir/includes_C.rsp -g -o CMakeFiles\\LVGL_GuiGuider.dir\\lvgl\\src\\draw\\lv_draw_text_lexical_compiler.c.obj -c C:\\NXP\\GUI-Guider-Projects\\Demo_1\\lvgl\\src\\draw\\lv_draw_text_lexical_compiler.c",
+  "file": "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_text_lexical_compiler.c",
+  "output": "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_text_lexical_compiler.c.obj"
+},
+{
+  "directory": "C:/NXP/GUI-Guider-Projects/Demo_1/build",
   "command": "D:\\mingw64\\bin\\gcc.exe -DLV_CONF_INCLUDE_SIMPLE @CMakeFiles/LVGL_GuiGuider.dir/includes_C.rsp -g -o CMakeFiles\\LVGL_GuiGuider.dir\\lvgl\\src\\draw\\lv_draw_transform.c.obj -c C:\\NXP\\GUI-Guider-Projects\\Demo_1\\lvgl\\src\\draw\\lv_draw_transform.c",
   "file": "C:/NXP/GUI-Guider-Projects/Demo_1/lvgl/src/draw/lv_draw_transform.c",
   "output": "CMakeFiles/LVGL_GuiGuider.dir/lvgl/src/draw/lv_draw_transform.c.obj"

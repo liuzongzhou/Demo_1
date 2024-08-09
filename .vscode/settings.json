@@ -18,6 +18,8 @@
         "lv_draw_text_lexical_compiler.h": "c",
         "lv_math.h": "c",
         "unistd.h": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "cstdio": "c",
+        "type_traits": "c"
     }
 }
